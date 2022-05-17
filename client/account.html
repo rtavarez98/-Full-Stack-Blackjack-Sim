@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color:#b03f4b;">
+    <head>
+        <meta charset="UTF-8">
+        <title>Account</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <main>
+            <Table id="table">
+                <thead>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Ties</th>
+                </thead>
+                <tbody></tbody>
+            </Table>
+
+            <br><br>
+
+            <button id="logout-acc-btn"> Logout </button>
+            <br>
+            <button id="delete-acc-btn"> Delete Account </button>
+            <br>
+            <button id="change-acc-btn"> Change Password </button>
+            <br>
+            <button id="play-blackjack-btn"> Play Blackjack </button>
+            <br><br>
+
+            <section hidden id="changePassword">
+                <label>Please Enter The New Password:</label>
+                <input type="text" id="newPasswordInput">
+                <button id="new-password-btn"> Submit </button>
+            </section>
+        </main>
+
+        <script src="account.js"></script>
+    </body>
+</html>
