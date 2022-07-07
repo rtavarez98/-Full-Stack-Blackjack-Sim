@@ -18,7 +18,10 @@ document.getElementById('retry-btn').onclick = function() {
     location.reload();
 };
 
-const retryBtn = document.querySelector('#retry-btn');
+document.getElementById('exit-btn').onclick = function() {
+    location.href = "account.html";
+};
+
 var handD = [];//Dealer's hand
 var handP = [];//Player's hand
 
@@ -71,7 +74,7 @@ function dealerTurn(deck, hand){
         else stand = true;
     }
     gameOutcome();
-    retryBtn.hidden = false;
+    afterGameOptions.hidden = false;
 }
 
 function gameOutcome(){

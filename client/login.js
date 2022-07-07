@@ -9,18 +9,20 @@ accessAccBtn.addEventListener('click', function() {
 accessAccBtn.onclick = function(){
     const usernameInput = document.querySelector('#usernameInput');
     const passwordInput = document.querySelector('#passwordInput');
-    fetch('http://localhost:5000/login', {
-        headers:{
-            'Content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            username : usernameInput.value,
-            password : passwordInput.value
+
+    if( (usernameInput.value == "") || (passwordInput.value == "") || (usernameInput.value == null) || (passwordInput.value == null) ) alert("Enter a username and a password");
+    else fetch('http://localhost:5000/login', {
+            headers:{
+               'Content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                username : usernameInput.value,
+                password : passwordInput.value
+            })
         })
-    })
-    .then(response => response.json() )
-    .catch(err => console.log(err) );
+        .then(response => response.json() )
+        .catch(err => console.log(err) );
 
     //go to blackjack.html if true, "wrong username or password" if false
 }
