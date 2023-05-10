@@ -1,9 +1,14 @@
 const accessAccBtn = document.querySelector('#access-acc-btn');
+const createAccBtn = document.querySelector('#create-acc-btn');
 
 accessAccBtn.addEventListener('click', function() {
     setTimeout(function() {
         location.href = "account.html";
     }, 500);
+});
+
+createAccBtn.addEventListener('click', function() {
+    location.href = "createAccount.html";
 });
 
 accessAccBtn.onclick = function(){
@@ -21,8 +26,7 @@ accessAccBtn.onclick = function(){
                 password : passwordInput.value
             })
         })
-        .then(response => response.json() )
         .catch(err => console.log(err) );
 
-    //go to blackjack.html if true, "wrong username or password" if false
+    //go to account.html if true, "wrong username or password" if false
 }

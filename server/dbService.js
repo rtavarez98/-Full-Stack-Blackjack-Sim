@@ -1,43 +1,28 @@
-const mysql = require('mysql');
+const {MongoClient} = require('mongodb');
+const {ObjectId} = require('mongodb');
+
 let instance = null;
-
-const con = mysql.createConnection ({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "blackjackdb"
-});
-
-con.connect(function(err) {
-    con.query("CREATE TABLE IF NOT EXISTS `accounts` (`id` int(11) NOT NULL AUTO_INCREMENT, `username` varchar(100) NOT NULL, `password` varchar(100) NOT NULL, `wins` int(255) NOT NULL, `losses` int(255) NOT NULL, `ties` int(255) NOT NULL, PRIMARY KEY (`id`) ) ENGINE = InnoDB;")
-    //reformat
-    if (err) throw err;
-    console.log("db " + con.state);
-});
+require('dotenv').config();
+const uri = process.env.MONGO_URI;
+const client = new MongoClient(uri);
 
 class DbService{
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
     }
 
-    async createNewAcc(username, password, wins, losses, ties){
+    async createNewAcc(username, password){
         try{
-            const insertId = await new Promise( function(resolve, reject) {
-                const query = "INSERT INTO accounts (username, password, wins, losses, ties) VALUE (?, ?, ?, ?, ?)";
-
-                con.query(query, [username, password, wins, losses, ties], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result.insertId);
-                });
-            });
-            return {
-                id : insertId,
+            await client.connect();
+            await client.db("fullstackBlackjack").collection("accounts").insertOne( {
                 username : username,
                 password : password,
-                wins : wins,
-                losses : losses,
-                ties : ties
-            };
+                wins : 0,
+                losses : 0,
+                ties : 0
+            });
+            await client.close();
+
         } catch(err) {
             console.log(err);
         }
@@ -45,106 +30,86 @@ class DbService{
 
     async searchAcc(username, password){
         try{
-            const response = await new Promise( function(resolve, reject) {
-                const query = "SELECT * FROM accounts WHERE username = ? AND password = ?"
-                con.query(query, [username, password], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    if (result.length <= 0) { // account not found
-                        console.log("account not found"); // remove maybe
-                        return {};
-                    }
-                    resolve(result);
-                });
-            });
-            return response;
+           await client.connect();
+           const result = await client.db("fullstackBlackjack").collection("accounts").findOne({ username : username, password : password});
+           await client.close();
+           return result;
         } catch(err){
             console.log(err);
         }
     }
 
-    async chgPassword(username, oldPassword, newPassword) {
+    async chgPassword(id, newPassword) {
         try{
-            const response = await new Promise( function(resolve, reject) {
-                const query = "UPDATE accounts SET password = ? WHERE username = ? AND password = ?"
-                con.query(query, [newPassword, username, oldPassword], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result.affectedRows);
-                });
-            });
-            return response === 1 ? true : false;
+            await client.connect();
+            await client.db("fullstackBlackjack").collection("accounts").updateOne(
+                {_id : new ObjectId(id)},
+                {$set:{password : newPassword}}
+            );
+            await client.close();
         }catch(err){
             console.log(err);
         }
     }
 
-    async updateWins(username, password) {
+    async updateWins(id) {
         try{
-            const response = await new Promise ( function(resolve, reject) {
-                const query = "UPDATE accounts SET wins = wins + 1 WHERE username = ? AND password = ?"
-                con.query(query, [username, password], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result.affectedRows);
-                });
-            });
+            await client.connect();
+            await client.db("fullstackBlackjack").collection("accounts").updateOne(
+                {_id : new ObjectId(id)},
+                {$inc:{wins : 1}}
+            );
+            await client.close();
         }catch(err){
             console.log(err);
         }
     }
 
-    async updateLosses(username, password) {
+    async updateLosses(id) {
         try{
-            const response = await new Promise ( function(resolve, reject) {
-                const query = "UPDATE accounts SET losses = losses + 1 WHERE username = ? AND password = ?"
-                con.query(query, [username, password], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result.affectedRows);
-                });
-            });
+            await client.connect();
+            await client.db("fullstackBlackjack").collection("accounts").updateOne(
+                {_id : new ObjectId(id)},
+                {$inc:{losses : 1}}
+            );
+            await client.close();
         }catch(err){
             console.log(err);
         }
     }
 
-    async updateTies(username, password) {
+    async updateTies(id) {
         try{
-            const response = await new Promise ( function(resolve, reject) {
-                const query = "UPDATE accounts SET ties = ties + 1 WHERE username = ? AND password = ?"
-                con.query(query, [username, password], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result.affectedRows);
-                });
-            });
+            await client.connect();
+            await client.db("fullstackBlackjack").collection("accounts").updateOne(
+                {_id : new ObjectId(id)},
+                {$inc:{ties : 1}}
+            );
+            await client.close();
         }catch(err){
             console.log(err);
         }
     }
 
-    async getWinsLossesTies(username, password) {
+    async getWinsLossesTies(id) {
         try{
-            const response = await new Promise ( function(resolve, reject) {
-                const query = "SELECT wins, losses, ties FROM accounts WHERE username = ? AND password = ?"
-                con.query(query, [username, password], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result);
-                });
-            });
-            console.log(response);
-            return response;
+            await client.connect();
+            const result = await client.db("fullstackBlackjack").collection("accounts").findOne(
+                { _id : id },
+                { projection: {_id: 0 , username : 0, password : 0} }
+            );
+            await client.close();
+            return result;
         }catch(err){
             console.log(err);
         }
     }
 
-    async deleteAcc(username, password){
+    async deleteAcc(id){
         try{
-            const response = await new Promise( function(resolve, reject) {
-                const query = "DELETE FROM accounts WHERE username = ? AND password = ?"
-                con.query(query, [username, password], (err, result) => {
-                    if (err) reject(new Error(err.message) );
-                    resolve(result.affectedRows);
-                });
-            });
-            return response === 1 ? true : false;
+            await client.connect();
+            await client.db("fullstackBlackjack").collection("accounts").deleteOne( {_id : new ObjectId(id)} );
+            await client.close();
         }catch(err){
             console.log(err);
         }

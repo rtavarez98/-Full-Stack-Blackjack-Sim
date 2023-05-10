@@ -15,15 +15,14 @@ app.use(session({
 
 var sess = {};
 
-app.post('/createAcc', (req, res) => { // slow response speed up
+app.post('/createAcc', (req, res) => {
     const {username} = req.body;
     const {password} = req.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.createNewAcc(username, password, 0, 0, 0)
+    const result = db.createNewAcc(username, password)
 
     result
-    .then(data => res.json( {data : data} ) )
     .catch(err => console.log(err) );
 });
 
@@ -34,15 +33,9 @@ app.post('/login', (req, res) => {
     const result = db.searchAcc(username, password)
 
     result
-    .then(data => res.json( {data : data} ) )
+    .then( result => (result != {} ) ? req.session.userId = result._id : console.log("not found") )
+    .then( () => sess = req.session )
     .catch(err => console.log(err) );
-
-    if (result != {} ) { // authenticate found account
-        req.session.username = username;
-        req.session.password = password;
-    }
-
-    sess = req.session;
 });
 
 app.patch('/logout', (req, res) => {// revise to return response
@@ -52,44 +45,43 @@ app.patch('/logout', (req, res) => {// revise to return response
 app.patch('/updatePass', (req, res) => {
     const {newPassword} = req.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.chgPassword(sess.username, sess.password, newPassword)
+    const result = db.chgPassword(sess.userId, newPassword)
 
     result
-     .then(data => res.json( {success : data} ) )
+     //.then(data => res.json( {success : data} ) )
      .catch(err => console.log(err) );
 });
 
-app.patch('/updateWin', (req,res) => {//win
+app.patch('/updateWin', (req,res) => {
     const db = dbService.getDbServiceInstance();
-    const result = db.updateWins(sess.username, sess.password)
+    const result = db.updateWins(sess.userId)
 
     result
-    .then(data => res.json( {success : data} ) )
+    //.then(data => res.json( {success : data} ) )
     .catch(err => console.log(err) );
 });
 
-app.patch('/updateLoss', (req,res) => {//loss
+app.patch('/updateLoss', (req,res) => {
     const db = dbService.getDbServiceInstance();
-    const result = db.updateLosses(sess.username, sess.password)
+    const result = db.updateLosses(sess.userId)
 
     result
-    .then(data => res.json( {success : data} ) )
+    //.then(data => res.json( {success : data} ) )
     .catch(err => console.log(err) );
 });
 
-app.patch('/updateTie', (req,res) => {//tie
+app.patch('/updateTie', (req,res) => {
     const db = dbService.getDbServiceInstance();
-    const result = db.updateTies(sess.username, sess.password)
+    const result = db.updateTies(sess.userId)
 
     result
-    .then(data => res.json( {success : data} ) )
+    //.then(data => res.json( {success : data} ) )
     .catch(err => console.log(err) );
 });
 
-app.get('/readAcc', (req,res) => {
-    console.log(sess.username)//test
+app.get('/readAcc', (req,res) => { // returns an object containing wins, losses, and ties
     const db = dbService.getDbServiceInstance();
-    const result = db.getWinsLossesTies(sess.username, sess.password)
+    const result = db.getWinsLossesTies(sess.userId)
 
     result
     .then(data => res.json( {data : data} ) )
@@ -98,10 +90,10 @@ app.get('/readAcc', (req,res) => {
 
 app.delete('/deleteAcc', (req, res) => {
     const db = dbService.getDbServiceInstance();
-    const result = db.deleteAcc(sess.username, sess.password)
+    const result = db.deleteAcc(sess.userId)
 
     result
-    .then(data => res.json( {success : data} ) )
+    //.then(data => res.json( {success : data} ) )
     .catch(err => console.log(err) );
 
     //res.redirect('/logout');

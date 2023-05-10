@@ -15,7 +15,6 @@ createAccBtn.onclick = function(){
             password : passwordInput.value
         })
     })
-    .then(response => response.json() )
     .catch(err => console.log(err) );
 
     //if username matches an existing account return "username taken", else return "account created" and go back to login.html

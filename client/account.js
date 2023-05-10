@@ -10,18 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => loadHTMLTable(data['data'] ) );
 });
 
-function loadHTMLTable(data){
+function loadHTMLTable(data){ //isn't working but i'm gonna change it anyway :|
     const table = document.querySelector('table tbody');
-
     let tableHTML = "";
-
-    data.forEach(function({wins, losses, ties}) {
+    console.log(data);//test
+    data => {
         tableHTML += "<tr>";
-        tableHTML += `<td>${wins}</td>`;
-        tableHTML += `<td>${losses}</td>`;
-        tableHTML += `<td>${ties}</td>`;
+        tableHTML += `<td>${data.wins}</td>`;
+        tableHTML += `<td>${data.losses}</td>`;
+        tableHTML += `<td>${data.ties}</td>`;
         tableHTML += "</tr>";
-    });
+    };
 
     table.innerHTML = tableHTML;
 }

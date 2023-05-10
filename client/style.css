@@ -2,3 +2,8 @@ body{
     width: 50%;
     margin: 50px auto;
 }
+
+button{
+    background-color: #4CAF50; /* Green */
+    color: #FFFFFF; /* White */
+}
