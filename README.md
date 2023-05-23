@@ -1,6 +1,6 @@
 # Full Stack Blackjack Sim
 
-This application allows a user to alter accounts and use them to play games of blackjack
+This application allows a user to alter accounts and use them to play games of blackjack.
 
 ## Purpose
 **A full stack application that lets a user**
@@ -20,15 +20,11 @@ This application allows a user to alter accounts and use them to play games of b
 * Bet (Not Implemented Yet)
 * Option to "Play Again"
 
-## Requirements
-* XAMPP Control Panel or an equivalent to run Apache and SQL servers
-* Terminal to start a Javascript file
-
 ## How To Play
-1) Start Apache and SQL servers
-2) Run app.js in the server folder
+1) Go to this [link](https://full-stack-blackjack.netlify.app)
 3) Login or create a new account
 4) Press the "Play Blackjack" button on the account page
 
 ## Credits
-Card images were taken from a free-soruce [google archive](https://code.google.com/archive/p/vector-playing-cards/)
+This React application was built using  [Create React App](https://github.com/facebook/create-react-app) and the card images were taken from a free-soruce [google archive](https://code.google.com/archive/p/vector-playing-cards/)
+.
