@@ -7,7 +7,7 @@ function Account() {
     const newPasswordRef = React.useRef();
 
     const fetchData = () => {
-        fetch('http://localhost:5000/readAcc', { // replace
+        fetch('https://full-stack-blackjack-sim-production.up.railway.app/readAcc', {
             headers:{
                 'Content-type': 'application/json'
             },
@@ -22,7 +22,7 @@ function Account() {
     }, []);
 
     function logoutAccount() {
-        fetch('http://localhost:5000/logout', { //replace
+        fetch('https://full-stack-blackjack-sim-production.up.railway.app/logout', {
             headers:{
                 'Content-type': 'application/json'
             },
@@ -31,7 +31,7 @@ function Account() {
     }
 
     function deleteAccount() {
-        fetch('http://localhost:5000/deleteAcc', { //replace
+        fetch('https://full-stack-blackjack-sim-production.up.railway.app/deleteAcc', {
             headers:{
                 'Content-type': 'application/json'
             },
@@ -42,7 +42,7 @@ function Account() {
 
     function changePassword() {
         const password = newPasswordRef.current.value;
-        fetch('http://localhost:5000/updatePass', { //replace
+        fetch('https://full-stack-blackjack-sim-production.up.railway.app/updatePass', {
             headers:{
                 'Content-type': 'application/json'
             },

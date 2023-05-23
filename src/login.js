@@ -11,7 +11,7 @@ function Login(){
         const username = usernameRef.current.value;
         const password = passwordRef.current.value;
         if( (username === "") || (password === "") || (username === null) || (password === null) ) alert("Enter a username and a password");
-        else fetch('/login', {
+        else fetch('https://full-stack-blackjack-sim-production.up.railway.app/login', {
             headers:{
                'Content-type': 'application/json'
             },

@@ -4,7 +4,7 @@ const app = express();
 const session = require('express-session');
 
 const dbService = require('./dbService');
-
+require('dotenv').config();
 app.use(cors() );
 app.use(express.json() );
 app.use(session({
@@ -100,4 +100,4 @@ app.delete('/deleteAcc', (req, res) => {
     req.session.destroy();//placeholder
 });
 
-app.listen(5000, () => console.log('app is running') );
+app.listen(process.env.PORT || 5000, '0.0.0.0');

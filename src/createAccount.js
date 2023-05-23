@@ -8,7 +8,7 @@ function CreateAccount() {
         const username = usernameRef.current.value;
         const password = passwordRef.current.value;
         if( (username === "") || (password === "") || (username === null) || (password === null) ) alert("Enter a username and a password");
-        else fetch('http://localhost:5000/createAcc', {
+        else fetch('https://full-stack-blackjack-sim-production.up.railway.app/createAcc', {
             headers:{
                 'Content-type': 'application/json'
             },

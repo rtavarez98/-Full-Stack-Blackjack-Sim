@@ -68,56 +68,55 @@ function Blackjack() {
             else stand = true;
         }
         gameOutcome();
-        //afterGameOptions.hidden = false;
     }
 
     function gameOutcome(){
         setAfterGameOptions(!afterGameOptions);
         if(handVal(handD) > 21)  {
             document.getElementById('gameResult').innerHTML = "Player Wins";
-            //fetch('http://localhost:5000/updateWin', { //replace
-                //headers:{
-                    //'Content-type': 'application/json'
-                //},
-                //method: 'PATCH'
-            //})
+            fetch('https://full-stack-blackjack-sim-production.up.railway.app/updateWin', {
+                headers:{
+                    'Content-type': 'application/json'
+                },
+                method: 'PATCH'
+            })
         }
         else if(handVal(handP) > 21) {
             document.getElementById('gameResult').innerHTML = "Dealer Wins";
-            //fetch('http://localhost:5000/updateWin', { //replace
-                //headers:{
-                    //'Content-type': 'application/json'
-                //},
-                //method: 'PATCH'
-            //})
+            fetch('https://full-stack-blackjack-sim-production.up.railway.app/updateWin', {
+                headers:{
+                    'Content-type': 'application/json'
+                },
+                method: 'PATCH'
+            })
         }
         else{
             if(handVal(handP) > handVal(handD) ) {
                 document.getElementById('gameResult').innerHTML = "Player Wins";
-                //fetch('http://localhost:5000/updateWin', { //replace
-                    //headers:{
-                        //'Content-type': 'application/json'
-                    //},
-                    //method: 'PATCH'
-                //})
+                fetch('https://full-stack-blackjack-sim-production.up.railway.app/updateWin', {
+                    headers:{
+                        'Content-type': 'application/json'
+                    },
+                    method: 'PATCH'
+                })
             }
             else if(handVal(handP) < handVal(handD) ) {
                 document.getElementById('gameResult').innerHTML = "Dealer Wins";
-                //fetch('http://localhost:5000/updateLoss', { //replace
-                    //headers:{
-                        //'Content-type': 'application/json'
-                    //},
-                    //method: 'PATCH'
-                //})
+                fetch('https://full-stack-blackjack-sim-production.up.railway.app/updateLoss', {
+                    headers:{
+                        'Content-type': 'application/json'
+                    },
+                    method: 'PATCH'
+                })
             }
             else {
                 document.getElementById('gameResult').innerHTML = "Draw";
-                //fetch('http://localhost:5000/updateTie', { //replace
-                    //headers:{
-                       // 'Content-type': 'application/json'
-                    //},
-                    //method: 'PATCH'
-                //})
+                fetch('https://full-stack-blackjack-sim-production.up.railway.app/updateTie', {
+                    headers:{
+                        'Content-type': 'application/json'
+                    },
+                    method: 'PATCH'
+                })
             }
         }
     }
