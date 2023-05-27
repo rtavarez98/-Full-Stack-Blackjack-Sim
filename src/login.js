@@ -7,6 +7,9 @@ function Login(){
 
 //check if logged in on "login page" load
 
+    /**
+    * Calls a fetch request to login to an account
+    */
     function loginAccount(){
         const username = usernameRef.current.value;
         const password = passwordRef.current.value;

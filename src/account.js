@@ -21,6 +21,9 @@ function Account() {
         fetchData();
     }, []);
 
+    /**
+    * Calls a fetch request to logout the active account
+    */
     function logoutAccount() {
         fetch('https://full-stack-blackjack-sim-production.up.railway.app/logout', {
             headers:{
@@ -28,8 +31,12 @@ function Account() {
             },
             method: 'PATCH'
         })
+        //return to login page
     }
 
+    /**
+    * Calls a fetch request to delete the active account
+    */
     function deleteAccount() {
         fetch('https://full-stack-blackjack-sim-production.up.railway.app/deleteAcc', {
             headers:{
@@ -40,6 +47,9 @@ function Account() {
         //return to login page
     }
 
+    /**
+    * Calls a fetch request to change the password of the active account
+    */
     function changePassword() {
         const password = newPasswordRef.current.value;
         fetch('https://full-stack-blackjack-sim-production.up.railway.app/updatePass', {
@@ -54,7 +64,6 @@ function Account() {
         //location.reload();
     }
 
-    //have to change the hidden section to only load in the dom when button is pressed
     return (
         <div>
             <table>

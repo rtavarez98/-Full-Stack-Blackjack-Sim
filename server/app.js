@@ -79,7 +79,7 @@ app.patch('/updateTie', (req,res) => {
     .catch(err => console.log(err) );
 });
 
-app.get('/readAcc', (req,res) => { // returns an object containing wins, losses, and ties
+app.get('/readAcc', (req,res) => {
     const db = dbService.getDbServiceInstance();
     const result = db.getWinsLossesTies(sess.userId)
 

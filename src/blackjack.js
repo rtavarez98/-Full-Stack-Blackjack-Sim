@@ -19,6 +19,9 @@ function Blackjack() {
     var handD = []; //Dealer's hand
     var handP = []; //Player's hand
 
+    /**
+    * Plays a game of blackjack
+    */
     function game(){
         setStartButton(!startButton);
         setGameSection(!gameSection);
@@ -44,6 +47,12 @@ function Blackjack() {
         }, 100);
     }
 
+    /**
+    * Allows the user to choose set actions in blackjack
+    *
+    * @param deck - deck of playing cards
+    * @param hand - the player's current hand of cards
+    */
     function playerTurn(deck, hand){
          document.getElementById('hit-btn').onclick = function() {
             hit(deck, hand);
@@ -57,6 +66,12 @@ function Blackjack() {
          };
     }
 
+    /**
+    * Plays the dealer's turn in a game of blackjack
+    *
+    * @param deck - deck of playing cards
+    * @param hand - the dealer's current hand of cards
+    */
     function dealerTurn(deck, hand){
         var stand = false;
         console.log(handVal(hand) );//testing
@@ -70,6 +85,9 @@ function Blackjack() {
         gameOutcome();
     }
 
+    /**
+    * Determines the outcome of the game and records the result in the player's account with a fetch request
+    */
     function gameOutcome(){
         setAfterGameOptions(!afterGameOptions);
         if(handVal(handD) > 21)  {
@@ -121,6 +139,9 @@ function Blackjack() {
         }
     }
 
+    /**
+    * Creates a standard deck of 52 playing cards
+    */
     function makeDeck(){
         const deck = []
         const suits = ["heart", "diamond", "club", "spade"];
@@ -136,6 +157,11 @@ function Blackjack() {
         return deck;
     }
 
+    /**
+    * Shuffles a deck of cards
+    *
+    * @param deck - deck of playing cards
+    */
     function shuffle(deck){
         var temp;
 
@@ -147,11 +173,23 @@ function Blackjack() {
         }
     }
 
+    /**
+    * Adds a card from the deck to a player's hand
+    *
+    * @param deck - deck of playing cards
+    * @param hand - a player's current hand of cards
+    */
     function hit(deck, hand){
         hand.push(deck[deck.length - 1]);
         deck.length--;
     }
 
+    /**
+    * Evaluates the value of a player's hand
+    *
+    * @param hand - a player's current hand of cards
+    * @return totVal - total value of the hand given
+    */
     function handVal(hand){
         var totVal = 0;
         var a1 = -1; //first ace in hand
@@ -172,6 +210,13 @@ function Blackjack() {
         return totVal;
     }
 
+    /**
+    * Loads images from the /images folder for a visual representation of a player's hand
+    *
+    * @param hand - a player's current hand of cards
+    * @param cardNum - the amount of cards in the current hand
+    * @param tableId - id of the table images are loaded to
+    */
     function handPrint(hand, cardNum, tableId){
         for(var i = hand.length - cardNum; hand[i] != null; i++){
             var img = document.createElement("img");
@@ -181,8 +226,8 @@ function Blackjack() {
             document.getElementById(tableId).appendChild(img);
         }
     }
-//hide gameSection
-    return( // document.getElementById('start-game-btn').style.visibility = 'hidden'; on start the game button
+
+    return(
         <div>
             {startButton && <button onClick={ () => game() }> Start the Game </button>}
             {gameSection && <main id="gameSection">

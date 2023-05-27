@@ -7,10 +7,20 @@ const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
 class DbService{
+
+    /**
+    * @returns an instance of the database if it exists else returns a new instance
+    */
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
     }
 
+    /**
+    * Creates a new account in the database with zero wins, losses, and ties
+    *
+    * @param username - username associated with the new account
+    * @param password - password associated with the new account
+    */
     async createNewAcc(username, password){
         try{
             await client.connect();
@@ -22,12 +32,18 @@ class DbService{
                 ties : 0
             });
             await client.close();
-
         } catch(err) {
             console.log(err);
         }
     }
 
+    /**
+    * Searches for a single account with the correct username and password
+    *
+    * @param username - username that is searched for
+    * @param password - password that is searched for
+    * @return result - the account that has the correct username and password
+    */
     async searchAcc(username, password){
         try{
            await client.connect();
@@ -39,6 +55,12 @@ class DbService{
         }
     }
 
+    /**
+    * Changes the password to an account with the associated id
+    *
+    * @param id - identification that is used to search the correct account
+    * @param newPassword - new password that is set for the account
+    */
     async chgPassword(id, newPassword) {
         try{
             await client.connect();
@@ -52,6 +74,11 @@ class DbService{
         }
     }
 
+    /**
+    * Increments the "wins" value in an account by one
+    *
+    * @param id - identification that is used to search the correct account
+    */
     async updateWins(id) {
         try{
             await client.connect();
@@ -65,6 +92,11 @@ class DbService{
         }
     }
 
+    /**
+    * Increments the "losses" value in an account by one
+    *
+    * @param id - identification that is used to search the correct account
+    */
     async updateLosses(id) {
         try{
             await client.connect();
@@ -78,6 +110,11 @@ class DbService{
         }
     }
 
+    /**
+    * Increments the "ties" value in an account by one
+    *
+    * @param id - identification that is used to search the correct account
+    */
     async updateTies(id) {
         try{
             await client.connect();
@@ -91,6 +128,12 @@ class DbService{
         }
     }
 
+    /**
+    * Retrieves the wins, losses, and ties associated with an account
+    *
+    * @param id - identification that is used to search the correct account
+    * @return result - wins, losses, and ties of the searched account
+    */
     async getWinsLossesTies(id) {
         try{
             await client.connect();
@@ -105,6 +148,11 @@ class DbService{
         }
     }
 
+    /**
+    * Deletes an account with the associated id
+    *
+    * @param id - identification that is used to search the correct account
+    */
     async deleteAcc(id){
         try{
             await client.connect();

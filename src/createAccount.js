@@ -4,6 +4,9 @@ function CreateAccount() {
     const usernameRef = React.useRef();
     const passwordRef = React.useRef();
 
+    /**
+    * Calls a fetch request to create a new account
+    */
     function createNewAccount() {
         const username = usernameRef.current.value;
         const password = passwordRef.current.value;
