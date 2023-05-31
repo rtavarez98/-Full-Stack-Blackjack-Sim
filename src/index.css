@@ -1,13 +1,33 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#bouncer {
+  margin-top: 6%;
+  min-height: 100vh;
+  font-size: 2em;
+  text-align: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#frontDoor {
+    margin-top: 3%;
+    background-color: #34456e;
+    color: white;
+}
+
+#frontDoor button{
+    background-color: #5f79b8;
+    color: white;
+}
+
+#casinoTable {
+    background-color: #3a854c;
+    color: white;
+    text-align: center;
+}
+
+#casinoTable button {
+    background-color: #233b28;
+    color: white;
+}
+
+#casinoTable table {
+    margin-left: 5%;
+    margin-right: 5%;
 }

@@ -33,6 +33,7 @@ app.post('/login', (req, res) => {
     const result = db.searchAcc(username, password)
 
     result
+    .then(data => res.json( {success : data} ) )
     .then( result => (result != {} ) ? req.session.userId = result._id : console.log("not found") )
     .then( () => sess = req.session )
     .catch(err => console.log(err) );

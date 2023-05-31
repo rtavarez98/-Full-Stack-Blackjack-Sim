@@ -228,7 +228,7 @@ function Blackjack() {
     }
 
     return(
-        <div>
+        <div id="casinoTable">
             {startButton && <button onClick={ () => game() }> Start the Game </button>}
             {gameSection && <main id="gameSection">
                 <br></br>
@@ -255,7 +255,7 @@ function Blackjack() {
                 {afterGameOptions && <section id="afterGameOptions">
                     <button onClick={ () => window.location.reload(false) }> Play Again </button>
                     <Link to="/Account">
-                        <button>
+                        <button onClick={ () => document.body.style.backgroundColor = "#34456e"}>
                             Exit
                         </button>
                     </Link>

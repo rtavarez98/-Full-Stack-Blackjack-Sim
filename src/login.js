@@ -1,9 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function Login(){
     const usernameRef = React.useRef();
     const passwordRef = React.useRef();
+    const navigate = useNavigate();
 
 //check if logged in on "login page" load
 
@@ -24,12 +25,17 @@ function Login(){
                 password : password
             })
         })
+        .then(
+            navigate("/Account"),
+            document.body.style.backgroundColor = "#34456e"
+        ) //if response success = true change current route else alert login failed
         .catch(err => console.log(err) );
     }
 
     // if sess.userId exists in server, redirect to account page when loading login; else continue to login page
     return (
-            <div>
+            <div id="bouncer">
+                <header> Login </header>
                 <input type="text" ref={usernameRef} placeholder="Username"></input>
                 <br></br>
                 <input type="text" ref={passwordRef} placeholder="Password"></input>

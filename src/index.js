@@ -9,9 +9,7 @@ import CreateAccount from './createAccount.js';
 import Account from './account.js';
 import Blackjack from './blackjack.js';
 
-        //add * path for no page found
-
-const root =  ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter>
         <Routes>

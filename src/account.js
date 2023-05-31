@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function Account() {
     const [records, setRecords] = useState([]);
     const [changePasswordForm, setChangePasswordForm] = useState(false);
     const newPasswordRef = React.useRef();
+    const navigate = useNavigate();
 
     const fetchData = () => {
         fetch('https://full-stack-blackjack-sim-production.up.railway.app/readAcc', {
@@ -14,7 +15,9 @@ function Account() {
             method: 'GET',
         })
         .then(response => response.json() )
-        .then(data => setRecords(data.data) );
+        //.then(response => console.log(response));//test
+        .then(data => setRecords(data) );
+
     };
 
     useEffect(() => {
@@ -31,20 +34,28 @@ function Account() {
             },
             method: 'PATCH'
         })
-        //return to login page
+        .then(response => response.json() )
+        .then(
+            navigate("/"),
+            document.body.style.backgroundColor = "#ffffff";
+        );
     }
 
     /**
     * Calls a fetch request to delete the active account
     */
     function deleteAccount() {
+
         fetch('https://full-stack-blackjack-sim-production.up.railway.app/deleteAcc', {
             headers:{
                 'Content-type': 'application/json'
             },
             method: 'DELETE'
         })
-        //return to login page
+        .then(
+            navigate("/"),
+            document.body.style.backgroundColor = "#ffffff";
+        );
     }
 
     /**
@@ -65,7 +76,7 @@ function Account() {
     }
 
     return (
-        <div>
+        <div id="frontDoor">
             <table>
                 <thead>
                     <th>Wins</th>
@@ -73,11 +84,11 @@ function Account() {
                     <th>Ties</th>
                 </thead>
                 <tbody>
-                    {records.map((record, index) => (
-                        <tr key={index}>
-                            <td>{record.wins}</td>
-                            <td>{record.losses}</td>
-                            <td>{record.ties}</td>
+                    {Object.keys(records).map(index => (
+                        <tr>
+                            <td>{records[index].wins}</td>
+                            <td>{records[index].losses}</td>
+                            <td>{records[index].ties}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -92,7 +103,7 @@ function Account() {
             <button onClick={ () => setChangePasswordForm(!changePasswordForm)}> Change Password </button>
             <br></br>
             <Link to="/Blackjack">
-                <button>
+                <button onClick={ () => document.body.style.backgroundColor = "#3a854c"}>
                     Play Blackjack
                 </button>
             </Link>

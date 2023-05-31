@@ -1,8 +1,10 @@
 import React, {useState, useRef} from 'react';
+import {useNavigate} from "react-router-dom";
 
 function CreateAccount() {
     const usernameRef = React.useRef();
     const passwordRef = React.useRef();
+    const navigate = useNavigate();
 
     /**
     * Calls a fetch request to create a new account
@@ -21,21 +23,20 @@ function CreateAccount() {
                 password : password.value
             })
         })
-        //.then() go to new account page
+        .then(navigate("/") )
         .catch(err => console.log(err) );
 
         //if username matches an existing account return "username taken", else return "account created" and go back to login.html
     }
 
     return (
-        <div>
-            <header>
-                <input type="text" ref={usernameRef} placeholder="Username"></input>
-                <br></br>
-                <input type="text" ref={passwordRef} placeholder="Password"></input>
-                <br></br>
-                <button onClick={ () => createNewAccount() }> Register </button>
-            </header>
+        <div id="bouncer">
+            <header> Create Account </header>
+            <input type="text" ref={usernameRef} placeholder="Username"></input>
+            <br></br>
+            <input type="text" ref={passwordRef} placeholder="Password"></input>
+            <br></br>
+            <button onClick={ () => createNewAccount() }> Register </button>
         </div>
     );
 }
